@@ -1,9 +1,10 @@
-require "enlighten/version"
 require 'json'
 require 'net/http'
+require_relative 'utils'
+
 module Enlighten
   class System
-
+    include Utils
     @default_params = {
         host: 'api.enphaseenergy.com',
         path: '/api/v2/systems'
@@ -21,32 +22,37 @@ module Enlighten
     end
 
     def method_missing(method,*args)
-      @attributes[method.to_sym] ||= fetch(method)
+      fetch(method, args[0])
     end
 
     def initialize(id)
       @id = id
-      @attributes = {}
-      @attributes[:summary] = fetch(:summary)
     end
 
     def self.find(id)
       new(id)
     end
+
     def self.default_params
       @default_params
     end
+
     def self.url
       "https://#{@default_params[:host]}#{@default_params[:path]}"
     end
 
-
-    def fetch(method)
-      OpenStruct.new(JSON.parse(Net::HTTP.get(URI(format_url(method)))))
+protected
+    def fetch(method, args={})
+      OpenStruct.new(JSON.parse(api_response(method,args)))
     end
 
-    def format_url(method)
-      self.class.url + '/' + @id.to_s + '/' + method.to_s + "?key=#{self.class.default_params[:key]}&user_id=#{self.class.default_params[:user_id]}"
+    def api_response(method,args={})
+      Net::HTTP.get(URI(format_url(method,args)))
+    end
+
+    def format_url(method,args={})
+      params = {key: self.class.default_params[:key], user_id: self.class.default_params[:user_id]}.merge(args||{})
+      self.class.url + '/' +  method.to_s + '?' + query_string(params)
     end
   end
 end

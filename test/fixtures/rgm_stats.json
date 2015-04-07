@@ -1,0 +1,11 @@
+{
+  "system_id": 1765,
+  "total_devices": 1,
+  "intervals":[
+    {"end_at": 1381475700, "wh_del": 0, "devices_reporting": 1},
+    {"end_at": 1284123600, "wh_del": 0, "devices_reporting": 1},
+    {"end_at": 1284124500, "wh_del": 15, "devices_reporting": 1},
+    {"end_at": 1284125400, "wh_del": 21, "devices_reporting": 1},
+    {"end_at": 1284126300, "wh_del": 34, "devices_reporting": 1}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "system_id": 67,
+  "envoys": [
+    {
+      "envoy_id": 434803,
+      "serial_number": "121112607295",
+      "part_number": "800-00069-r02",
+      "status": "normal",
+      "name": "Envoy 121112607295",
+      "last_report_at": 1428362525
+    }
+  ]
+}
