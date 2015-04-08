@@ -1,13 +1,23 @@
 require 'json'
 require 'net/http'
-require_relative 'utils'
+
 
 module Enlighten
+  class EnlightenError < StandardError
+  end
+  class EnlightenApiError < EnlightenError
+    attr_reader :code
+    def initialize(json)
+        @code = json.reason.to_i if json.reason.to_i
+        super((json.message && json.message.join('; ')) || json.reason)
+    end
+  end
+
   class System
-    include Utils
     @default_params = {
         host: 'api.enphaseenergy.com',
-        path: '/api/v2/systems'
+        path: '/api/v2/systems',
+        time_zone: 7
     }
 
     class << self
@@ -43,7 +53,9 @@ module Enlighten
 
 protected
     def fetch(method, args={})
-      OpenStruct.new(JSON.parse(api_response(method,args)))
+      result = OpenStruct.new(JSON.parse(api_response(method,args)))
+      raise(EnlightenApiError.new(result)) if result.respond_to?(:reason)
+      result
     end
 
     def api_response(method,args={})
@@ -52,7 +64,14 @@ protected
 
     def format_url(method,args={})
       params = {key: self.class.default_params[:key], user_id: self.class.default_params[:user_id]}.merge(args||{})
-      self.class.url + '/' +  method.to_s + '?' + query_string(params)
+      self.class.url + '/' +  @id.to_s + '/' + method.to_s + '?' + query_string(params)
     end
+    def query_string(args)
+      args.map{|k,v|value= (['start_at','end_at'].include? k.to_s)  ? v.to_i.to_s : date_format(v);"#{k.to_s}=#{CGI.escape(value)}"}.join('&')
+    end
+    def date_format(date)
+      date ? (date.respond_to?(:strftime)?date.strftime('%Y-%m-%d'):date.to_s) : ''
+    end
+
   end
 end

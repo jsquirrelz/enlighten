@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.name          = "enlighten"
   spec.version       = Enlighten::VERSION
   spec.authors       = ["Robert Martin"]
-  spec.email         = ["robert.martin@nbcuni.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.email         = ["rob@rob-martin.net"]
+  spec.summary       = %q{Use this gem to connect to the enphase 'enlighten' API. Docs at https://developer.enphase.com/docs }
   spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
@@ -21,3 +21,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
 end
+
