@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "enlighten"
   spec.version       = Enlighten::VERSION
   spec.authors       = ["Robert Martin"]
-  spec.email         = ["rob@rob-martin.net"]
+  spec.email         = [""]
   spec.summary       = %q{Use this gem to connect to the enphase 'enlighten' API.  }
   spec.description   = %q{Docs at https://developer.enphase.com/docs}
   spec.homepage      = "https://www.github.com/datadude/enlighten"
