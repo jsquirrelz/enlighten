@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Enlighten::VERSION
   spec.authors       = ["Robert Martin"]
   spec.email         = ["rob@rob-martin.net"]
-  spec.summary       = %q{Use this gem to connect to the enphase 'enlighten' API. Docs at https://developer.enphase.com/docs }
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Use this gem to connect to the enphase 'enlighten' API.  }
+  spec.description   = %q{Docs at https://developer.enphase.com/docs}
+  spec.homepage      = "https://www.github.com/datadude/enlighten"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
