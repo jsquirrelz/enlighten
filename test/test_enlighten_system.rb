@@ -5,7 +5,10 @@ describe Enlighten::System do
   include Enlighten
 
   let(:system){ Enlighten::System.new(67)}
-
+  before do
+    #my key with the test user id
+    Enlighten::System.config(key: '0960c4df1203f3079489fa8ccc251b59', user_id: '4d7a45774e6a41320a')
+  end
   it "should initalize with default params" do
     Enlighten::System.url.must_equal "https://api.enphaseenergy.com/api/v2/systems"
   end
@@ -17,10 +20,7 @@ describe Enlighten::System do
 
   describe "Function Calls" do
 
-    before do
-      #my key with the test user id
-      Enlighten::System.config(key: '0960c4df1203f3079489fa8ccc251b59', user_id: '4d7a45774e6a41320a')
-    end
+
     describe 'format_url' do
       it "should format the url" do
         system.send(:format_url,:summary).must_equal('https://api.enphaseenergy.com/api/v2/systems/67/summary?key=0960c4df1203f3079489fa8ccc251b59&user_id=4d7a45774e6a41320a')
@@ -90,7 +90,12 @@ describe Enlighten::System do
           system.energy_lifetime.start_date.must_equal "2010-01-01"
         end
       end
-
+    it "should return cached energy_lifetime upon request" do
+      system.stub(:api_response, load_fixture(:energy_lifetime)) do
+        system.energy_lifetime.start_date.must_equal "2010-01-01"
+      end
+      system.energy_lifetime.start_date.must_equal "2010-01-01"
+    end
       it "should 'find' a system" do
         system = Enlighten::System.find(67)
         system.stub(:api_response, load_fixture(:summary)) do

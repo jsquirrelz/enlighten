@@ -1,6 +1,6 @@
 require 'json'
 require 'net/http'
-
+require 'digest'
 
 module Enlighten
   class EnlightenError < StandardError
@@ -32,11 +32,12 @@ module Enlighten
     end
 
     def method_missing(method,*args)
-      fetch(method, args[0])
+      @attributes[method.to_s + Digest::MD5.base64digest(args[0].to_s)] ||= fetch(method, args[0])
     end
 
     def initialize(id)
       @id = id
+      @attributes = {}
     end
 
     def self.find(id)
