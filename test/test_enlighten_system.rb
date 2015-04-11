@@ -8,7 +8,7 @@ describe Enlighten::System do
   let(:system){ Enlighten::System.new(67)}
   before do
     #my key with the test user id
-    Enlighten::System.config(key: '0960c4df1203f3079489fa8ccc251b59', user_id: '4d7a45774e6a41320a')
+    Enlighten::System.config(key: 'abc123', user_id: '123abc')
   end
   it "should initalize with default params" do
     Enlighten::System.url.must_equal "https://api.enphaseenergy.com/api/v2/systems"
@@ -24,11 +24,11 @@ describe Enlighten::System do
 
     describe 'format_url' do
       it "should format the url" do
-        system.send(:format_url,:summary).must_equal('https://api.enphaseenergy.com/api/v2/systems/67/summary?key=0960c4df1203f3079489fa8ccc251b59&user_id=4d7a45774e6a41320a')
+        system.send(:format_url,:summary).must_equal('https://api.enphaseenergy.com/api/v2/systems/67/summary?key=abc123&user_id=123abc')
       end
       it "should format the url with parameters" do
         system.send(:format_url,:energy_lifetime,start_date: '2010-01-01',end_date: '2010-12-31').must_equal(
-            "https://api.enphaseenergy.com/api/v2/systems/67/energy_lifetime?key=0960c4df1203f3079489fa8ccc251b59&user_id=4d7a45774e6a41320a&start_date=2010-01-01&end_date=2010-12-31"
+            "https://api.enphaseenergy.com/api/v2/systems/67/energy_lifetime?key=abc123&user_id=123abc&start_date=2010-01-01&end_date=2010-12-31"
         )
       end
       it "should format the url with Time parameters" do
@@ -36,12 +36,12 @@ describe Enlighten::System do
         end_date = DateTime.parse('2010-12-31')
 
         system.send(:format_url,:energy_lifetime,start_date: start_date,end_date: end_date).must_equal(
-            "https://api.enphaseenergy.com/api/v2/systems/67/energy_lifetime?key=0960c4df1203f3079489fa8ccc251b59&user_id=4d7a45774e6a41320a&start_date=2010-01-01&end_date=2010-12-31"
+            "https://api.enphaseenergy.com/api/v2/systems/67/energy_lifetime?key=abc123&user_id=123abc&start_date=2010-01-01&end_date=2010-12-31"
         )
       end
       it "should format the url with 'start_at', and 'end_at' parameters" do
         system.send(:format_url,:stats,start_at: DateTime.strptime('2015-01-01 00:00','%Y-%m-%d %H:%M').to_time,end_at: DateTime.strptime('2015-01-02 00:00', '%Y-%m-%d %H:%M').to_time).must_equal(
-            "https://api.enphaseenergy.com/api/v2/systems/67/stats?key=0960c4df1203f3079489fa8ccc251b59&user_id=4d7a45774e6a41320a&start_at=1420070400&end_at=1420156800"
+            "https://api.enphaseenergy.com/api/v2/systems/67/stats?key=abc123&user_id=123abc&start_at=1420070400&end_at=1420156800"
         )
       end
     end
