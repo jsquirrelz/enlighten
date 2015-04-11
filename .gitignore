@@ -11,6 +11,7 @@
 *.so
 *.o
 *.a
+*.gem
 mkmf.log
 .idea/
 .idea

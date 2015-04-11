@@ -1,6 +1,7 @@
 require 'json'
 require 'net/http'
 require 'digest'
+require 'cgi'
 
 module Enlighten
   class EnlightenError < StandardError
