@@ -43,7 +43,7 @@ module Enlighten
     end
 
     def initialize(params={})
-      @id = params[:id]
+      @id = params[:id].to_i
       #overide the default config with parameters passed in, like (user_id)
       @params=self.class.default_params.merge(params)
       @systems = fetch(nil).systems
