@@ -5,7 +5,11 @@ require 'date'
 describe Enlighten::System do
   include Enlighten
 
-  let(:system){ Enlighten::System.new(67)}
+  let(:system){
+    Enlighten::System.stub_any_instance(:api_response,load_fixture(:index)) do
+      Enlighten::System.new(:id=>67)
+    end
+  }
   before do
     #my key with the test user id
     Enlighten::System.config(key: 'abc123', user_id: '123abc')
@@ -44,6 +48,12 @@ describe Enlighten::System do
             "https://api.enphaseenergy.com/api/v2/systems/67/stats?key=abc123&user_id=123abc&start_at=1420070400&end_at=1420156800"
         )
       end
+      it "should format an index url if given nil params" do
+          system.send(:format_url,nil,nil).must_equal(
+              "https://api.enphaseenergy.com/api/v2/systems/?key=abc123&user_id=123abc"
+          )
+      end
+
     end
 
     describe 'date_format' do
@@ -67,6 +77,41 @@ describe Enlighten::System do
     end
   end
 
+  describe 'attributes' do
+    it "should set a system_id" do
+      system.system_id.must_equal 67
+    end
+    it "should set a system_name" do
+      system.system_name.must_equal "Eich Residence"
+    end
+    it "should set a system_public_name" do
+      system.system_public_name.must_equal "Eich Residence"
+    end
+    it "should set a status" do
+      system.status.must_equal "normal"
+    end
+    it "should set a timezone" do
+      system.timezone.must_equal "America/Los_Angeles"
+    end
+    it "should set a country" do
+      system.country.must_equal "US"
+    end
+    it "should set a state" do
+      system.state.must_equal "CA"
+    end
+    it "should set a city" do
+      system.city.must_equal"Sebastopol"
+    end
+    it "should set a connection_type" do
+      system.connection_type.must_equal "ethernet"
+    end
+    it "should set other_references" do
+      system.other_references.must_equal ["Solarfox"]
+    end
+    it "should set a postal_code" do
+      system.postal_code.must_equal "95472"
+    end
+  end
 
   describe 'REST end points' do
     it "should return a system summary upon creation" do
@@ -98,9 +143,9 @@ describe Enlighten::System do
       system.energy_lifetime.start_date.must_equal "2010-01-01"
     end
       it "should 'find' a system" do
-        system = Enlighten::System.find(67)
-        system.stub(:api_response, load_fixture(:summary)) do
-          system.summary.system_id.must_equal 67
+        Enlighten::System.stub_any_instance(:api_response,load_fixture(:index)) do
+          new_system = Enlighten::System.find(67)
+          new_system.system_id.must_equal 67
         end
       end
 

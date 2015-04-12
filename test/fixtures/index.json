@@ -1,0 +1,89 @@
+{
+  "systems": [
+    {
+      "system_id": 67,
+      "system_name": "Eich Residence",
+      "system_public_name": "Eich Residence",
+      "status": "normal",
+      "timezone": "America/Los_Angeles",
+      "country": "US",
+      "state": "CA",
+      "city": "Sebastopol",
+      "postal_code": "95472",
+      "other_references": ["Solarfox"],
+      "connection_type": "ethernet"
+    },
+    {
+      "system_id": 239922,
+      "system_name": "Fornage D st",
+      "system_public_name": "Residential System",
+      "status": "normal",
+      "timezone": "America/Los_Angeles",
+      "country": "US",
+      "state": "CA",
+      "city": "Petaluma",
+      "postal_code": "94952",
+      "connection_type": "ethernet"
+    },
+    {
+      "system_id": 283776,
+      "system_name": "Brown/Pontoriero Residence",
+      "system_public_name": "Brown/Pontoriero Residence",
+      "status": "micro",
+      "timezone": "America/Los_Angeles",
+      "country": "US",
+      "state": "CA",
+      "city": "Petaluma",
+      "postal_code": "94954",
+      "connection_type": "wifi"
+    },
+    {
+      "system_id": 286840,
+      "system_name": "Rogers, Jim",
+      "system_public_name": "Residential System",
+      "status": "normal",
+      "timezone": "America/Los_Angeles",
+      "country": "US",
+      "state": "CA",
+      "city": "Petaluma",
+      "postal_code": "94952",
+      "connection_type": "ethernet"
+    },
+    {
+      "system_id": 339784,
+      "system_name": "Weed Patch Solar",
+      "system_public_name": "Residential System",
+      "status": "normal",
+      "timezone": "America/Denver",
+      "country": "US",
+      "state": "ID",
+      "city": "Mountain Home",
+      "postal_code": "83647",
+      "connection_type": "wifi"
+    },
+    {
+      "system_id": 490782,
+      "system_name": "Derek's House - 5 Regalia",
+      "system_public_name": "Derek's House - 5 Regalia",
+      "status": "normal",
+      "timezone": "America/Los_Angeles",
+      "country": "US",
+      "state": "CA",
+      "city": "Novato",
+      "postal_code": "94947-2125",
+      "connection_type": "ethernet"
+    },
+    {
+      "system_id": 537438,
+      "system_name": "Wagoner",
+      "system_public_name": "Residential System",
+      "status": "normal",
+      "timezone": "America/Los_Angeles",
+      "country": "US",
+      "state": "CA",
+      "city": "Windsor",
+      "postal_code": "95492",
+      "connection_type": "ethernet"
+    }
+  ]
+}

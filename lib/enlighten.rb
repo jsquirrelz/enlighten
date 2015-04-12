@@ -15,13 +15,19 @@ module Enlighten
   end
 
   class System
+    attr_reader :params
     @default_params = {
         host: 'api.enphaseenergy.com',
-        path: '/api/v2/systems',
-        time_zone: 7
+        path: '/api/v2/systems'
     }
-
+    END_POINTS = [:energy_lifetime,:envoys,:inventory,:monthly_production,:rgm_stats,:stats,:summary]
+    END_POINTS.each do |end_point|
+      define_method(end_point) do |*args|
+        @attributes[end_point.to_s + Digest::MD5.base64digest(args[0].to_s)] ||= fetch(end_point, args[0])
+      end
+    end
     class << self
+
       def config(args={})
         @default_params = @default_params.merge(args).freeze unless args.empty?
         @default_params
@@ -33,16 +39,19 @@ module Enlighten
     end
 
     def method_missing(method,*args)
-      @attributes[method.to_s + Digest::MD5.base64digest(args[0].to_s)] ||= fetch(method, args[0])
+      @attributes[method.to_s] || super
     end
 
-    def initialize(id)
-      @id = id
-      @attributes = {}
+    def initialize(params={})
+      @id = params[:id]
+      #overide the default config with parameters passed in, like (user_id)
+      @params=self.class.default_params.merge(params)
+      @systems = fetch(nil).systems
+      @attributes = @systems.map{|system| system if system['system_id'] == @id  }[0] rescue {}
     end
 
     def self.find(id)
-      new(id)
+      new(:id=>id)
     end
 
     def self.default_params
@@ -65,8 +74,8 @@ protected
     end
 
     def format_url(method,args={})
-      params = {key: self.class.default_params[:key], user_id: self.class.default_params[:user_id]}.merge(args||{})
-      self.class.url + '/' +  @id.to_s + '/' + method.to_s + '?' + query_string(params)
+      params = {key: @params[:key], user_id: @params[:user_id]}.merge(args||{})
+      self.class.url + '/' + (method && (@id.to_s + '/' + method.to_s)||'') + '?' + query_string(params)
     end
     def query_string(args)
       args.map{|k,v|value= (['start_at','end_at'].include? k.to_s)  ? v.to_i.to_s : date_format(v);"#{k.to_s}=#{CGI.escape(value)}"}.join('&')
