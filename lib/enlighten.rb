@@ -15,7 +15,7 @@ module Enlighten
   end
 
   class System
-    attr_reader :params
+    attr_reader :params, :systems
     @default_params = {
         host: 'api.enphaseenergy.com',
         path: '/api/v2/systems'
@@ -77,9 +77,11 @@ protected
       params = {key: @params[:key], user_id: @params[:user_id]}.merge(args||{})
       self.class.url + '/' + (method && (@id.to_s + '/' + method.to_s)||'') + '?' + query_string(params)
     end
+
     def query_string(args)
       args.map{|k,v|value= (['start_at','end_at'].include? k.to_s)  ? v.to_i.to_s : date_format(v);"#{k.to_s}=#{CGI.escape(value)}"}.join('&')
     end
+
     def date_format(date)
       date ? (date.respond_to?(:strftime)?date.strftime('%Y-%m-%d'):date.to_s) : ''
     end
