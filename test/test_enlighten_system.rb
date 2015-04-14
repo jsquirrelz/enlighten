@@ -113,6 +113,20 @@ describe Enlighten::System do
     end
   end
 
+  describe "attributes for different id" do
+    let(:system){
+      Enlighten::System.stub_any_instance(:api_response,load_fixture(:index)) do
+        Enlighten::System.new(:id=>283776)
+      end
+    }
+    it "should set a system_id" do
+      system.system_id.must_equal 283776
+    end
+    it "should set a system_name" do
+      system.system_name.must_equal "Brown/Pontoriero Residence"
+    end
+  end
+
   describe 'REST end points' do
     it "should return a system summary upon creation" do
         system.stub(:api_response, load_fixture(:summary)) do

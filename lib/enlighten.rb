@@ -47,7 +47,7 @@ module Enlighten
       #overide the default config with parameters passed in, like (user_id)
       @params=self.class.default_params.merge(params)
       @systems = fetch(nil).systems
-      @attributes = @systems.map{|system| system if system['system_id'] == @id  }[0] rescue {}
+      @attributes = @systems.select{|system| system['system_id'] == @id  }[0] rescue {}
     end
 
     def self.find(id)
