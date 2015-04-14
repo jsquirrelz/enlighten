@@ -1,0 +1,5 @@
+{
+  "reason": "500",
+  "type": "NoMethodError",
+  "message": ["undefined method `manufacturer' for #<EimDevice:0x00000013e41250>"]
+}

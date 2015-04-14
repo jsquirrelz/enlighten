@@ -183,6 +183,12 @@ describe Enlighten::System do
         end
       end
     end
+    describe Enlighten::EnlightenApiError do
+      it 'should parse the return for a 500 error' do
+        error = Enlighten::EnlightenApiError.new(OpenStruct.new(JSON.parse(load_fixture(:error_500))))
+        error.code.must_equal 500
+      end
+    end
   end
 
 
