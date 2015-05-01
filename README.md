@@ -8,7 +8,7 @@ Ruby Gem for use with the Enphase "Elighten" API version 2
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'enlighten', :git => 'https://github.com/datadude/enlighten.git'
+gem 'enlighten'
 ```
 
 And then execute:
